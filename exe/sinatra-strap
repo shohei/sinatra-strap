@@ -1,0 +1,13 @@
+#!/usr/bin/env ruby
+require 'sinatra/strap'
+
+s = Sinatra::Strap.new
+
+if ARGV[0] == "new"
+  unless (appname=ARGV[1]) == nil 
+    s.generate(appname)
+  end
+else 
+  s.show_help
+end
+
