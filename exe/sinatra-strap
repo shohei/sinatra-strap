@@ -5,7 +5,8 @@ s = Sinatra::Strap::Base.new
 
 if ARGV[0] == "new"
   unless (appname=ARGV[1]) == nil 
-    s.generate(appname)
+    s.appname = appname
+    s.generate
   end
 else 
   s.show_help

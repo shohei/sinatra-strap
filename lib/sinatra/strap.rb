@@ -4,12 +4,14 @@ module Sinatra
   module Strap
     class Base
 
-      def generate(appname)
-        unless directory_exists?(appname)
-          system("mkdir #{appname}")
-          system("cp -r #{File.dirname(__FILE__)}/../..//vendor/public #{appname}")
-          system("cp -r #{File.dirname(__FILE__)}/../../vendor/views #{appname}")
-          system("cp #{File.dirname(__FILE__)}/../../vendor/app.rb #{appname}")
+      attr_accessor :appname
+
+      def generate
+        unless directory_exists?(@appname)
+          system("mkdir #{@appname}")
+          system("cp -r #{File.dirname(__FILE__)}/../../vendor/public #{@appname}")
+          system("cp -r #{File.dirname(__FILE__)}/../../vendor/views #{@appname}")
+          system("cp #{File.dirname(__FILE__)}/../../vendor/app.rb #{@appname}")
         else
           puts "app folder already exists."
         end
@@ -22,7 +24,23 @@ module Sinatra
       end
 
       def directory_exists?(directory)
-          File.directory?(directory)
+        File.directory?(directory)
+      end
+
+      def replace
+        open("#{File.dirname(__FILE__)}/../../vendor/views/index.haml","r+") {|f|
+          f.flock(File::LOCK_EX)
+          body = f.read
+          body = body.gsub(/(^\%title\s.*$)/) do |tmp|
+            "#{@appname}"
+          end 
+          body = body.gsub(/(^\%h1\s.*$)/) do |tmp|
+            "#{@appname}"
+          end 
+          f.rewind
+          f.puts body
+          f.truncate(f.tell)
+        }
       end
 
     end
