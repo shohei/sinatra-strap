@@ -5,11 +5,11 @@ module Sinatra
     class Base
 
       def generate(appname)
-        if  File.directory?(appname)
+        unless directory_exists?(appname)
           system("mkdir #{appname}")
-          system("cp -r #{File.dirname(__FILE__)}/../vendor/public #{appname}")
-          system("cp -r #{File.dirname(__FILE__)}/../vendor/views #{appname}")
-          system("cp #{File.dirname(__FILE__)}/../vendor/app.rb #{appname}")
+          system("cp -r #{File.dirname(__FILE__)}/../..//vendor/public #{appname}")
+          system("cp -r #{File.dirname(__FILE__)}/../../vendor/views #{appname}")
+          system("cp #{File.dirname(__FILE__)}/../../vendor/app.rb #{appname}")
         else
           puts "app folder already exists."
         end
@@ -21,6 +21,11 @@ module Sinatra
         exit(0)
       end
 
+      def directory_exists?(directory)
+          File.directory?(directory)
+      end
+
     end
   end
 end
+
