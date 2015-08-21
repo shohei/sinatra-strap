@@ -6,12 +6,17 @@ module Sinatra
 
       attr_accessor :appname
 
+      def initialize
+        @vendor_dir = File.expand_path "#{File.dirname(__FILE__)}/../../vendor"
+      end
+
       def generate
         unless directory_exists?(@appname)
           system("mkdir #{@appname}")
-          system("cp -r #{File.dirname(__FILE__)}/../../vendor/public #{@appname}")
-          system("cp -r #{File.dirname(__FILE__)}/../../vendor/views #{@appname}")
-          system("cp #{File.dirname(__FILE__)}/../../vendor/app.rb #{@appname}")
+          system("cp -r #{@vendor_dir}/public #{@appname}")
+          system("cp -r #{@vendor_dir}/views #{@appname}")
+          system("cp #{@vendor_dir}/app.rb #{@appname}")
+          replace
         else
           puts "app folder already exists."
         end
@@ -28,15 +33,15 @@ module Sinatra
       end
 
       def replace
-        open("#{File.dirname(__FILE__)}/../../vendor/views/index.haml","r+") {|f|
-          puts "#{File.dirname(__FILE__)}/../../vendor/views/index.haml"
+        template_path = File.expand_path "#{Dir.pwd}/#{@appname}/views/index.haml"
+        open("#{template_path}","r+") {|f|
           f.flock(File::LOCK_EX)
           body = f.read
           body = body.gsub(/%title.*/) do |tmp|
-            "#{@appname}"
+            "%title #{@appname}"
           end 
           body = body.gsub(/%h1.*/) do |tmp|
-            "#{@appname}"
+            "%h1 #{@appname}"
           end 
           f.rewind
           f.puts body
