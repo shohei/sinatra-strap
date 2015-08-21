@@ -31,10 +31,10 @@ module Sinatra
         open("#{File.dirname(__FILE__)}/../../vendor/views/index.haml","r+") {|f|
           f.flock(File::LOCK_EX)
           body = f.read
-          body = body.gsub(/(^\%title\s.*$)/) do |tmp|
+          body = body.gsub(/^%title\s.*$/) do |tmp|
             "#{@appname}"
           end 
-          body = body.gsub(/(^\%h1\s.*$)/) do |tmp|
+          body = body.gsub(/^%h1\s.*$/) do |tmp|
             "#{@appname}"
           end 
           f.rewind
