@@ -1,4 +1,4 @@
-# Sinatra::Strap
+# sinatra-strap
 
 
 ## Installation
