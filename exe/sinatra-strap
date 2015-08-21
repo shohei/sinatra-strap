@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 require 'sinatra/strap'
 
-s = Sinatra::Strap.new
+s = Sinatra::Strap::Base.new
 
 if ARGV[0] == "new"
   unless (appname=ARGV[1]) == nil 
