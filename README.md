@@ -11,7 +11,11 @@ $ gem install sinatra-strap
 
 ```
 $ sinatra-strap new APP_PATH
+$ cd APP_PATH
+$ ruby app.rb
 ```
+open [http://localhost:4557]()
+
 
 ## Author
 Shohei Aoki <<shoaok@gmail.com>>
