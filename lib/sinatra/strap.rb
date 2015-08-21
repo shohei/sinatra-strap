@@ -41,7 +41,7 @@ module Sinatra
             "%title #{@appname}"
           end 
           body = body.gsub(/%h1.*/) do |tmp|
-            "%h1 #{@appname}"
+            "%h1 #{@appname}.capitalize"
           end 
           f.rewind
           f.puts body
