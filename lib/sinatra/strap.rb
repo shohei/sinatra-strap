@@ -29,12 +29,13 @@ module Sinatra
 
       def replace
         open("#{File.dirname(__FILE__)}/../../vendor/views/index.haml","r+") {|f|
+          puts "#{File.dirname(__FILE__)}/../../vendor/views/index.haml"
           f.flock(File::LOCK_EX)
           body = f.read
-          body = body.gsub(/^%title\s.*$/) do |tmp|
+          body = body.gsub(/%title.*/) do |tmp|
             "#{@appname}"
           end 
-          body = body.gsub(/^%h1\s.*$/) do |tmp|
+          body = body.gsub(/%h1.*/) do |tmp|
             "#{@appname}"
           end 
           f.rewind
