@@ -3,7 +3,7 @@
 ## Requirements
 ```
 gem sinatra
-gem sinatra-strap
+gem sinatra-reloader
 gem haml
 ```
 
