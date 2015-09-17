@@ -1,5 +1,11 @@
 # sinatra-strap
 
+## Requirements
+```
+gem sinatra
+gem sinatra-strap
+gem haml
+```
 
 ## Installation
 
